@@ -14,15 +14,15 @@ class BookShowRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('book'),
         ]);
     }
 
-        public function rules(): array
+    public function rules(): array
     {
 
         return [
-            'id' => ['required']
+            'id' => ['required', 'integer', 'numeric']
         ];
     }
 

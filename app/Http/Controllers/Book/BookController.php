@@ -3,19 +3,43 @@
 namespace App\Http\Controllers\Book;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Book\BookDestroyRequest;
 use App\Http\Requests\Book\BookShowRequest;
 use App\Http\Requests\Book\BookStoreRequest;
+use App\Http\Requests\Book\BookUpdateRequest;
 use App\Http\Resources\Book\BookResource;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        return BookResource::collection([
+            (object)[
+                'id' => '9',
+                'name' => 'Store',
+                'author' => 'AuthorTest',
+                'year' => 2023,
+                'countPages' => 10,
+            ],
+            (object)[
+                'id' => '99',
+                'name' => 'Show',
+                'author' => 'AuthorTest',
+                'year' => 2023,
+                'countPages' => 10,
+            ],
+            (object)[
+                'id' => '999',
+                'name' => 'Update',
+                'author' => 'AuthorTest',
+                'year' => 2023,
+                'countPages' => 10,
+            ]
+        ]);
 
     }
 
@@ -28,7 +52,7 @@ class BookController extends Controller
 
         return new BookResource((object)[
             'id' => '9',
-            'name' => 'Test',
+            'name' => 'Store',
             'author' => 'AuthorTest',
             'year' => 2023,
             'countPages' => 10,
@@ -44,7 +68,7 @@ class BookController extends Controller
 
         return new BookResource((object)[
             'id' => '99',
-            'name' => 'Test',
+            'name' => 'Show',
             'author' => 'AuthorTest',
             'year' => 2023,
             'countPages' => 10,
@@ -54,16 +78,23 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BookUpdateRequest $request, string $id): BookResource
     {
-        //
+        $request->validated();
+        return new BookResource((object)[
+            'id' => '999',
+            'name' => 'Update',
+            'author' => 'AuthorTest',
+            'year' => 2023,
+            'countPages' => 10,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(BookDestroyRequest $request, string $id): void
     {
-        //
+        $request->validated();
     }
 }
