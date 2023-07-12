@@ -1,0 +1,11 @@
+### Send POST request with json body
+POST http://pro.loc/api/books
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "test1001",
+    "year": "2023",
+    "lang": "en",
+    "pages": "123"
+}

@@ -1,0 +1,4 @@
+### Send POST request with json body
+DELETE http://pro.loc/api/books/1
+Content-Type: application/json
+Accept: application/json

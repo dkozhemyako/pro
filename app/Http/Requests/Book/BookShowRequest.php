@@ -22,7 +22,7 @@ class BookShowRequest extends FormRequest
     {
 
         return [
-            'id' => ['required', 'integer', 'numeric']
+            'id' => ['required', 'integer', 'exists:books,id']
         ];
     }
 

@@ -1,0 +1,11 @@
+### Send POST request with json body
+PUT http://pro.loc/api/books/11
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "newUp11",
+    "year": "2023",
+    "lang": "en",
+    "pages": "123"
+}

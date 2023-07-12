@@ -2,22 +2,24 @@
 
 namespace App\Http\Requests\Book;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BookStoreRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
-            'author' => ['required', 'string', 'max:100'],
-            'year' => ['required', 'integer', 'numeric'],
-            'countPages' => ['required', 'integer', 'numeric'],
+            'name' => ['required', 'string', 'between:1,100', 'unique:books,name'],
+            'year' => ['required', 'integer', 'date_format:Y', 'digits:4', 'min:1970', 'before_or_equal:today'],
+            'lang' => ['required', 'string', Rule::in(['en', 'ua', 'pl', 'de'])],
+            'pages' => ['required', 'integer', 'between:10,55000'],
 
         ];
     }
