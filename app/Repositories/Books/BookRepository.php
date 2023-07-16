@@ -29,7 +29,7 @@ class BookRepository
         );
     }
 
-    public function updateById(BookStoreDTO $data, int $id): int
+    public function updateById(BookUpdateDTO $data, int $id): int
     {
         return DB::table('books')
             ->where('id', '=', $id)
@@ -40,7 +40,6 @@ class BookRepository
                 'pages' => $data->getPages(),
                 'updated_at' => $data->getUpdatedAt()
             ]);
-
     }
 
     public function deleteById(int $bookId): int
@@ -49,7 +48,7 @@ class BookRepository
             ->delete($bookId);
     }
 
-    public function getDate(BookIndexDTO $data): Collection
+    public function getByDate(BookIndexDTO $data): Collection
     {
         return collect(
             DB::table('books')
@@ -59,7 +58,7 @@ class BookRepository
         );
     }
 
-    public function getYear(BookIndexDTO $data): Collection
+    public function getByYear(BookIndexDTO $data): Collection
     {
         return collect(
             DB::table('books')
@@ -70,7 +69,7 @@ class BookRepository
         );
     }
 
-    public function getLang(BookIndexDTO $data): Collection
+    public function getByLang(BookIndexDTO $data): Collection
     {
         return collect(
             DB::table('books')
@@ -81,7 +80,7 @@ class BookRepository
         );
     }
 
-    public function getYearLang(BookIndexDTO $data): Collection
+    public function getByYearLang(BookIndexDTO $data): Collection
     {
         return collect(
             DB::table('books')

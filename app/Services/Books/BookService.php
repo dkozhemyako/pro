@@ -5,6 +5,7 @@ namespace App\Services\Books;
 use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookRepository;
 use App\Repositories\Books\BookStoreDTO;
+use App\Repositories\Books\BookUpdateDTO;
 use App\Repositories\Books\Iterators\BookIterator;
 use mysql_xdevapi\Collection;
 
@@ -12,8 +13,7 @@ class BookService
 {
     public function __construct(
         protected BookRepository $bookRepository,
-    )
-    {
+    ) {
     }
 
 
@@ -21,8 +21,6 @@ class BookService
     {
         $bookId = $this->bookRepository->store($data);
         return $this->bookRepository->getById($bookId);
-
-
     }
 
     public function show(int $bookId): BookIterator
@@ -30,7 +28,7 @@ class BookService
         return $this->bookRepository->getById($bookId);
     }
 
-    public function update(BookStoreDTO $data, int $bookId): BookIterator
+    public function update(BookUpdateDTO $data, int $bookId): BookIterator
     {
         $this->bookRepository->updateById($data, $bookId);
         return $this->bookRepository->getById($bookId);
@@ -44,18 +42,16 @@ class BookService
     public function index(BookIndexDTO $data): \Illuminate\Support\Collection
     {
         if ($data->getYear() !== null && $data->getLang() === null) {
-            return $this->bookRepository->getYear($data);
+            return $this->bookRepository->getByYear($data);
         }
         if ($data->getYear() === null && $data->getLang() !== null) {
-            return $this->bookRepository->getLang($data);
+            return $this->bookRepository->getByLang($data);
         }
         if ($data->getYear() !== null && $data->getLang() !== null) {
-            return $this->bookRepository->getYearLang($data);
+            return $this->bookRepository->getByYearLang($data);
         }
 
-        return $this->bookRepository->getDate($data);
-
-
+        return $this->bookRepository->getByDate($data);
     }
 
 }

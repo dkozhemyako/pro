@@ -20,7 +20,6 @@ class BookShowRequest extends FormRequest
 
     public function rules(): array
     {
-
         return [
             'id' => ['required', 'integer', 'exists:books,id']
         ];

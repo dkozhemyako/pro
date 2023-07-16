@@ -25,7 +25,6 @@ class Task5 extends Command
      */
     public function handle()
     {
-
         $age = $this->ask('How old are you??');
         if ($age < 18) {
             if (!$this->confirm('Are you sure you want to continue?')) {
@@ -58,10 +57,8 @@ class Task5 extends Command
 
             $this->alert('Success');
             return;
-
         }
 
         $this->warn('You did not select any option, start from the beginning');
-
     }
 }

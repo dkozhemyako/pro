@@ -5,24 +5,23 @@ namespace App\Repositories\Books;
 
 use Illuminate\Support\Carbon;
 
-class BookStoreDTO
+class BookUpdateDTO
 {
     public function __construct(
         protected string $name,
         protected int $year,
         protected string $lang,
         protected int $pages,
-        protected Carbon $createdAt,
+        protected Carbon $updatedAt,
     ) {
     }
 
-
     /**
-     * @return string
+     * @return Carbon
      */
-    public function getCreatedAt(): Carbon
+    public function getUpdatedAt(): Carbon
     {
-        return $this->createdAt;
+        return $this->updatedAt;
     }
 
     /**

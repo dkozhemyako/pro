@@ -11,6 +11,7 @@ use App\Http\Requests\Book\BookUpdateRequest;
 use App\Http\Resources\Book\BookResource;
 use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookStoreDTO;
+use App\Repositories\Books\BookUpdateDTO;
 use App\Services\Books\BookService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -20,8 +21,7 @@ class BookController extends Controller
 {
     public function __construct(
         protected BookService $bookService,
-    )
-    {
+    ) {
     }
 
     /**
@@ -37,7 +37,6 @@ class BookController extends Controller
         );
 
         return $this->bookService->index($dto);
-
     }
 
     /**
@@ -51,7 +50,6 @@ class BookController extends Controller
             $validated['year'],
             $validated['lang'],
             $validated['pages'],
-            now(),
             now(),
         );
 
@@ -74,7 +72,6 @@ class BookController extends Controller
                     $this->bookService->show($validated['id'])
                 )
             );
-
     }
 
     /**
@@ -83,12 +80,11 @@ class BookController extends Controller
     public function update(BookUpdateRequest $request, string $id): JsonResponse
     {
         $validated = $request->validated();
-        $dto = new BookStoreDTO(
+        $dto = new BookUpdateDTO(
             $validated['name'],
             $validated['year'],
             $validated['lang'],
             $validated['pages'],
-            now(),
             now(),
         );
         return
@@ -97,7 +93,6 @@ class BookController extends Controller
                     $this->bookService->update($dto, $validated['id'])
                 )
             );
-
     }
 
     /**
@@ -108,8 +103,6 @@ class BookController extends Controller
         $validated = $request->validated();
         $this->bookService->delete($validated['id']);
         return $this->getNoContentResponse();
-
-
     }
 
 }
