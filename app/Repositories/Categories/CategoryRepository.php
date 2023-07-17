@@ -27,7 +27,7 @@ class CategoryRepository
 
     public function updateById(CategoryUpdateDTO $data, int $id): void
     {
-         DB::table('categories')
+        DB::table('categories')
             ->where('id', '=', $id)
             ->update([
                 'name' => $data->getName(),
@@ -42,16 +42,16 @@ class CategoryRepository
 
     public function getAllDate(): Collection
     {
-            $result = DB::table('categories')
-                ->select([
-                    'id',
-                    'name',
-                    ])
-                ->get();
+        $result = DB::table('categories')
+            ->select([
+                'id',
+                'name',
+            ])
+            ->get();
 
-            return $result->map(function($item){
-                return new CategoryIterator($item);
-            });
+        return $result->map(function ($item) {
+            return new CategoryIterator($item);
+        });
     }
 
 }

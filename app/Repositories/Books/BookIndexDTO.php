@@ -11,9 +11,10 @@ class BookIndexDTO
     (
         protected string $startDate,
         protected string $endDate,
-        protected array $data,
+        protected array  $data,
 
-    ) {
+    )
+    {
     }
 
     /**

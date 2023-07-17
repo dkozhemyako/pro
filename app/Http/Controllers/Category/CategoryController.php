@@ -18,8 +18,10 @@ class CategoryController extends Controller
 {
     public function __construct(
         protected CategoryService $categoryService,
-    ) {
+    )
+    {
     }
+
     /**
      * Display a listing of the resource.
      */

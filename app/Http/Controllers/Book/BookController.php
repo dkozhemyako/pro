@@ -23,7 +23,8 @@ class BookController extends Controller
 {
     public function __construct(
         protected BookService $bookService,
-    ) {
+    )
+    {
     }
 
     /**

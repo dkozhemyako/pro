@@ -1,6 +1,7 @@
 <?php
+
 namespace App\Enums;
-enum LangEnum : string
+enum LangEnum: string
 {
     case EN = 'en';
     case UA = 'ua';

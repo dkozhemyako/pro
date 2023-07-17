@@ -42,7 +42,7 @@ class BookRepository
 
     public function updateById(BookUpdateDTO $data, int $id): void
     {
-         DB::table('books')
+        DB::table('books')
             ->where('id', '=', $id)
             ->update([
                 'name' => $data->getName(),
@@ -61,23 +61,23 @@ class BookRepository
 
     public function getByDate(BookIndexDTO $data): Collection
     {
-            $result = DB::table('books')
-                ->select([
-                    'books.id',
-                    'books.name',
-                    'year',
-                    'lang',
-                    'pages',
-                    'category_id',
-                    'categories.name as category_name',
-                    ])
-                ->join('categories', 'categories.id', '=', 'books.category_id')
-                ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
-                ->get();
+        $result = DB::table('books')
+            ->select([
+                'books.id',
+                'books.name',
+                'year',
+                'lang',
+                'pages',
+                'category_id',
+                'categories.name as category_name',
+            ])
+            ->join('categories', 'categories.id', '=', 'books.category_id')
+            ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
+            ->get();
 
-            return $result->map(function($item){
-                return new BookIterator($item);
-            });
+        return $result->map(function ($item) {
+            return new BookIterator($item);
+        });
     }
 
     public function getByYear(BookIndexDTO $data): Collection
@@ -93,57 +93,57 @@ class BookRepository
                 'categories.name as category_name',
             ])
             ->join('categories', 'categories.id', '=', 'books.category_id')
-                ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
-                ->where('year', '=', $data->getYear())
-                ->get();
+            ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
+            ->where('year', '=', $data->getYear())
+            ->get();
 
-        return $result->map(function($item){
+        return $result->map(function ($item) {
             return new BookIterator($item);
         });
     }
 
     public function getByLang(BookIndexDTO $data): Collection
     {
-            $result = DB::table('books')
-                ->select([
-                    'books.id',
-                    'books.name',
-                    'year',
-                    'lang',
-                    'pages',
-                    'category_id',
-                    'categories.name as category_name',
-                ])
-                ->join('categories', 'categories.id', '=', 'books.category_id')
-                ->where('lang', '=', $data->getLang())
-                ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
-                ->get();
+        $result = DB::table('books')
+            ->select([
+                'books.id',
+                'books.name',
+                'year',
+                'lang',
+                'pages',
+                'category_id',
+                'categories.name as category_name',
+            ])
+            ->join('categories', 'categories.id', '=', 'books.category_id')
+            ->where('lang', '=', $data->getLang())
+            ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
+            ->get();
 
-                return $result->map(function($item){
-                    return new BookIterator($item);
-                });
+        return $result->map(function ($item) {
+            return new BookIterator($item);
+        });
     }
 
     public function getByYearLang(BookIndexDTO $data): Collection
     {
-            $result = DB::table('books')
-                ->select([
-                    'books.id',
-                    'books.name',
-                    'year',
-                    'lang',
-                    'pages',
-                    'category_id',
-                    'categories.name as category_name',
-                ])
-                ->join('categories', 'categories.id', '=', 'books.category_id')
-                ->where('lang', '=', $data->getLang())
-                ->where('year', '=', $data->getYear())
-                ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
-                ->get();
+        $result = DB::table('books')
+            ->select([
+                'books.id',
+                'books.name',
+                'year',
+                'lang',
+                'pages',
+                'category_id',
+                'categories.name as category_name',
+            ])
+            ->join('categories', 'categories.id', '=', 'books.category_id')
+            ->where('lang', '=', $data->getLang())
+            ->where('year', '=', $data->getYear())
+            ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
+            ->get();
 
-                return $result->map(function($item){
-                    return new BookIterator($item);
-                });
+        return $result->map(function ($item) {
+            return new BookIterator($item);
+        });
     }
 }

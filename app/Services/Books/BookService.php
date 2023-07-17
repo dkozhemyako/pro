@@ -13,7 +13,8 @@ class BookService
 {
     public function __construct(
         protected BookRepository $bookRepository,
-    ) {
+    )
+    {
     }
 
 
