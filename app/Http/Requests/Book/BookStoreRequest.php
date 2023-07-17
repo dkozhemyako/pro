@@ -20,6 +20,7 @@ class BookStoreRequest extends FormRequest
             'year' => ['required', 'integer', 'date_format:Y', 'digits:4', 'min:1970', 'before_or_equal:today'],
             'lang' => ['required', 'string', Rule::in(['en', 'ua', 'pl', 'de'])],
             'pages' => ['required', 'integer', 'between:10,55000'],
+            'categoryId' => ['required', 'integer', 'exists:categories,id'],
 
         ];
     }

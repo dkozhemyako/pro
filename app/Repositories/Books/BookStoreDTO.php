@@ -3,6 +3,7 @@
 namespace App\Repositories\Books;
 
 
+use App\Enums\LangEnum;
 use Illuminate\Support\Carbon;
 
 class BookStoreDTO
@@ -10,10 +11,19 @@ class BookStoreDTO
     public function __construct(
         protected string $name,
         protected int $year,
-        protected string $lang,
+        protected LangEnum $lang,
         protected int $pages,
         protected Carbon $createdAt,
+        protected int $categoryId,
     ) {
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->categoryId;
     }
 
 
@@ -42,9 +52,9 @@ class BookStoreDTO
     }
 
     /**
-     * @return string
+     * @return LangEnum
      */
-    public function getLang(): string
+    public function getLang(): LangEnum
     {
         return $this->lang;
     }

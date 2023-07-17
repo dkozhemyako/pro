@@ -4,8 +4,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name": "test1001",
+    "name": "NewBookCat",
     "year": "2023",
-    "lang": "en",
-    "pages": "123"
+    "lang": "ua",
+    "pages": "123",
+    "categoryId": "2"
 }

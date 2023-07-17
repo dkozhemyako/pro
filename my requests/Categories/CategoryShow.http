@@ -1,0 +1,3 @@
+GET http://pro.loc/api/categories/3
+Content-Type: application/json
+Accept: application/json

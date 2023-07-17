@@ -1,10 +1,10 @@
 ### Send POST request with json body
-PUT http://pro.loc/api/books/11
+PUT http://pro.loc/api/books/9
 Content-Type: application/json
 Accept: application/json
 
 {
-    "name": "newUp56",
+    "name": "newUp10031",
     "year": "2023",
     "lang": "en",
     "pages": "123"
