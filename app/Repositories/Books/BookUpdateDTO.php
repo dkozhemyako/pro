@@ -3,6 +3,7 @@
 namespace App\Repositories\Books;
 
 
+use App\Enums\LangEnum;
 use Illuminate\Support\Carbon;
 
 class BookUpdateDTO
@@ -10,7 +11,7 @@ class BookUpdateDTO
     public function __construct(
         protected string $name,
         protected int $year,
-        protected string $lang,
+        protected LangEnum $lang,
         protected int $pages,
         protected Carbon $updatedAt,
     ) {
@@ -41,9 +42,9 @@ class BookUpdateDTO
     }
 
     /**
-     * @return string
+     * @return LangEnum
      */
-    public function getLang(): string
+    public function getLang(): LangEnum
     {
         return $this->lang;
     }

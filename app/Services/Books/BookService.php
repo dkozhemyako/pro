@@ -7,7 +7,7 @@ use App\Repositories\Books\BookRepository;
 use App\Repositories\Books\BookStoreDTO;
 use App\Repositories\Books\BookUpdateDTO;
 use App\Repositories\Books\Iterators\BookIterator;
-use mysql_xdevapi\Collection;
+use Illuminate\Support\Collection;
 
 class BookService
 {
@@ -39,7 +39,7 @@ class BookService
         return $this->bookRepository->deleteById($bookId);
     }
 
-    public function index(BookIndexDTO $data): \Illuminate\Support\Collection
+    public function index(BookIndexDTO $data): Collection
     {
         if ($data->getYear() !== null && $data->getLang() === null) {
             return $this->bookRepository->getByYear($data);

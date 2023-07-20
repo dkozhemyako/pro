@@ -1,0 +1,9 @@
+### Send POST request with json body
+PUT http://pro.loc/api/categories/3
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Third"
+
+}

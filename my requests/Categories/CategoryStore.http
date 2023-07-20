@@ -1,0 +1,8 @@
+### Send POST request with json body
+POST http://pro.loc/api/categories
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Second"
+}

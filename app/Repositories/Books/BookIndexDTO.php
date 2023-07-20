@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Books;
 
+use App\Enums\LangEnum;
+
 class BookIndexDTO
 {
 
@@ -42,12 +44,12 @@ class BookIndexDTO
     }
 
     /**
-     * @return string|null
+     * @return LangEnum|null
      */
-    public function getLang(): ?string
+    public function getLang(): ?LangEnum
     {
         if (array_key_exists('lang', array: $this->data) === true) {
-            return $this->data['lang'];
+            return LangEnum::from($this->data['lang']);
         }
         return null;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Book;
 
+use App\Enums\LangEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Book\BookDestroyRequest;
 use App\Http\Requests\Book\BookIndexRequest;
@@ -15,6 +16,7 @@ use App\Repositories\Books\BookUpdateDTO;
 use App\Services\Books\BookService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 
 
 class BookController extends Controller
@@ -27,7 +29,7 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(BookIndexRequest $request): \Illuminate\Support\Collection
+    public function index(BookIndexRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $dto = new BookIndexDTO(
@@ -36,7 +38,8 @@ class BookController extends Controller
             $validated,
         );
 
-        return $this->bookService->index($dto);
+        return $this->getSuccessResponse(
+            BookResource::collection($this->bookService->index($dto)));
     }
 
     /**
@@ -48,9 +51,10 @@ class BookController extends Controller
         $dto = new BookStoreDTO(
             $validated['name'],
             $validated['year'],
-            $validated['lang'],
+            LangEnum::from($validated['lang']),
             $validated['pages'],
             now(),
+            $validated['categoryId'],
         );
 
         return $this->getStoreResponse(
@@ -83,7 +87,7 @@ class BookController extends Controller
         $dto = new BookUpdateDTO(
             $validated['name'],
             $validated['year'],
-            $validated['lang'],
+            LangEnum::from($validated['lang']),
             $validated['pages'],
             now(),
         );
