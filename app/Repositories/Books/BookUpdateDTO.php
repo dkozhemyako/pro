@@ -9,13 +9,12 @@ use Illuminate\Support\Carbon;
 class BookUpdateDTO
 {
     public function __construct(
-        protected string   $name,
-        protected int      $year,
+        protected string $name,
+        protected int $year,
         protected LangEnum $lang,
-        protected int      $pages,
-        protected Carbon   $updatedAt,
-    )
-    {
+        protected int $pages,
+        protected Carbon $updatedAt,
+    ) {
     }
 
     /**

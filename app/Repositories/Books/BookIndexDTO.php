@@ -11,10 +11,9 @@ class BookIndexDTO
     (
         protected string $startDate,
         protected string $endDate,
-        protected array  $data,
+        protected array $data,
 
-    )
-    {
+    ) {
     }
 
     /**
@@ -31,6 +30,17 @@ class BookIndexDTO
     public function getEndDate(): string
     {
         return $this->endDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLastId(): ?int
+    {
+        if (array_key_exists('lastId', array: $this->data) === true) {
+            return $this->data['lastId'];
+        }
+        return 0;
     }
 
     /**

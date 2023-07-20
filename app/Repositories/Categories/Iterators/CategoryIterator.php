@@ -16,7 +16,6 @@ class CategoryIterator
      */
     public function getId(): int
     {
-
         if (property_exists($this->data, 'category_id') === true) {
             return $this->data->category_id;
         }
@@ -28,7 +27,6 @@ class CategoryIterator
      */
     public function getName(): string
     {
-
         if (property_exists($this->data, 'category_name') === true) {
             return $this->data->category_name;
         }

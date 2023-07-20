@@ -18,8 +18,7 @@ class CategoryController extends Controller
 {
     public function __construct(
         protected CategoryService $categoryService,
-    )
-    {
+    ) {
     }
 
     /**
@@ -28,7 +27,8 @@ class CategoryController extends Controller
     public function index()
     {
         return $this->getSuccessResponse(
-            CategoryResource::collection($this->categoryService->index()));
+            CategoryResource::collection($this->categoryService->index())
+        );
     }
 
     /**

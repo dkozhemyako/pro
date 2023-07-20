@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->enum('lang', ['en', 'ua', 'pl', 'de'])->change();
             $table->unsignedSmallInteger('pages')->change();
         });
-
     }
 
     /**

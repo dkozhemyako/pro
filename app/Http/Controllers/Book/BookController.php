@@ -23,8 +23,7 @@ class BookController extends Controller
 {
     public function __construct(
         protected BookService $bookService,
-    )
-    {
+    ) {
     }
 
     /**
@@ -40,7 +39,8 @@ class BookController extends Controller
         );
 
         return $this->getSuccessResponse(
-            BookResource::collection($this->bookService->index($dto)));
+            BookResource::collection($this->bookService->index($dto))
+        );
     }
 
     /**

@@ -10,8 +10,7 @@ class CategoryUpdateDTO
     public function __construct(
         protected string $name,
         protected Carbon $updatedAt,
-    )
-    {
+    ) {
     }
 
     /**
