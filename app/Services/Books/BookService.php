@@ -51,7 +51,7 @@ class BookService
             return $this->bookRepository->getByYearLang($data);
         }
 
-        return $this->bookRepository->getByDate($data);
+        return $this->bookRepository->getByData($data);
     }
 
 }

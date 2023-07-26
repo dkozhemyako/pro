@@ -13,6 +13,7 @@ class BookIterator
     protected int $pages;
     protected CategoryIterator $category;
 
+
     public function __construct(object $data)
     {
         $this->id = $data->id;

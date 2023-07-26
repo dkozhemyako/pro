@@ -39,7 +39,8 @@ class BookController extends Controller
         );
 
         return $this->getSuccessResponse(
-            BookResource::collection($this->bookService->index($dto)));
+            BookResource::collection($this->bookService->index($dto))
+        );
     }
 
     /**

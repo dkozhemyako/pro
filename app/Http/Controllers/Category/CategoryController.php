@@ -20,13 +20,15 @@ class CategoryController extends Controller
         protected CategoryService $categoryService,
     ) {
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         return $this->getSuccessResponse(
-            CategoryResource::collection($this->categoryService->index()));
+            CategoryResource::collection($this->categoryService->index())
+        );
     }
 
     /**

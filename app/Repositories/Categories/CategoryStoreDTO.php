@@ -10,8 +10,7 @@ class CategoryStoreDTO
     public function __construct(
         protected string $name,
         protected Carbon $createdAt,
-    )
-    {
+    ) {
     }
 
     /**

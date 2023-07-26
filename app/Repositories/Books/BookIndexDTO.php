@@ -33,6 +33,17 @@ class BookIndexDTO
     }
 
     /**
+     * @return int
+     */
+    public function getLastId(): ?int
+    {
+        if (array_key_exists('lastId', array: $this->data) === true) {
+            return $this->data['lastId'];
+        }
+        return 0;
+    }
+
+    /**
      * @return int|null
      */
     public function getYear(): ?int
