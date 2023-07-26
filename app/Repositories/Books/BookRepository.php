@@ -79,7 +79,6 @@ class BookRepository
             ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
             ->get();
 
-
         return $result->map(function ($item) {
             return new BookIterator($item);
         });
