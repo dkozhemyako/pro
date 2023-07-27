@@ -5,6 +5,7 @@ namespace App\Repositories\Users;
 
 use App\Repositories\Users\Iterators\UserIterator;
 use Illuminate\Support\Facades\DB;
+use Laravel\Passport\PersonalAccessTokenResult;
 
 class UserRepository
 {
@@ -27,7 +28,7 @@ class UserRepository
         return auth()->attempt($validated);
     }
 
-    public function getToken()
+    public function getToken(): PersonalAccessTokenResult
     {
         return auth()
             ->user()

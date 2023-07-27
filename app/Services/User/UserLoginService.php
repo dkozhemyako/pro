@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Repositories\Users\Iterators\UserIterator;
 use App\Repositories\Users\UserRepository;
+use Laravel\Passport\PersonalAccessTokenResult;
 
 class UserLoginService
 {
@@ -17,11 +18,12 @@ class UserLoginService
         return $this->userRepository->getById($id);
     }
 
-    public function login(array $validated)
+    public function login(array $validated): false|PersonalAccessTokenResult
     {
         if ($this->userRepository->login($validated) === false) {
-            return 'error'; // Response code: 422
+            return false; // Response code: 422
         }
+
 
         return $this->userRepository->getToken();
     }
