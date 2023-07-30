@@ -14,7 +14,6 @@ class UserLoginTest extends TestCase
     protected UserLoginService $userLoginService;
     protected UserRepository $userRepository;
     protected UserIterator $userIterator;
-
     protected PersonalAccessTokenResult $personalAccessTokenResult;
 
     /**

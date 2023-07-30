@@ -24,7 +24,6 @@ class UserLoginService
             return false; // Response code: 422
         }
 
-
         return $this->userRepository->getToken();
     }
 }
