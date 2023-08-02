@@ -2,28 +2,36 @@
 
 namespace App\Services\User;
 
-use App\Repositories\Users\Iterators\UserIterator;
-use App\Repositories\Users\UserRepository;
-use Laravel\Passport\PersonalAccessTokenResult;
+use App\Services\User\Handlers\CheckLoginDataHandler;
+use App\Services\User\Handlers\CheckWhiteListIpHandler;
+use App\Services\User\Handlers\GetAuthUserHandler;
+use App\Services\User\Handlers\RecordingLastIpHandler;
+use App\Services\User\Handlers\TokenGenerationHandler;
+use Illuminate\Pipeline\Pipeline;
 
 class UserLoginService
 {
+    protected const HANDLERS = [
+        CheckLoginDataHandler::class,
+        GetAuthUserHandler::class,
+        CheckWhiteListIpHandler::class,
+        TokenGenerationHandler::class,
+        RecordingLastIpHandler::class,
+    ];
+
     public function __construct(
-        protected UserRepository $userRepository,
+        protected Pipeline $pipeline,
     ) {
     }
 
-    public function getById(int $id): UserIterator
+    public function handle(LoginDTO $loginDTO): LoginDTO
     {
-        return $this->userRepository->getById($id);
+        return $this->pipeline
+            ->send($loginDTO)
+            ->through(self::HANDLERS)
+            ->then(function (LoginDTO $loginDTO) {
+                return $loginDTO;
+            });
     }
 
-    public function login(array $validated): false|PersonalAccessTokenResult
-    {
-        if ($this->userRepository->login($validated) === false) {
-            return false; // Response code: 422
-        }
-
-        return $this->userRepository->getToken();
-    }
 }

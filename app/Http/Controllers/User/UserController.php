@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Requests\User\UserLoginRequest;
 use App\Http\Resources\User\UserResource;
+use App\Services\User\LoginDTO;
 use App\Services\User\UserLoginService;
 
 class UserController
@@ -15,22 +16,15 @@ class UserController
 
     public function login(UserLoginRequest $request): UserResource
     {
-        $token = $this->userLoginService->login
-        (
-            $request->validated()
-        );
-
+        $dto = $this->userLoginService->handle(new LoginDTO(...$request->validated()));
         $userResource = new UserResource
         (
-            $this->userLoginService->getById
-            (
-                auth()->user()->id
-            )
+            $dto->getUser()
         );
 
         return $userResource->additional([
-            'Bearer' => $token,
+
+            'Bearer' => $dto->getToken(),
         ]);
-        //route
     }
 }
