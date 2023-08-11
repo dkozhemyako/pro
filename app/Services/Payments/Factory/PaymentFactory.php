@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Services\Payments;
+namespace App\Services\Payments\Factory;
 
 use App\Enums\PaymentsEnum;
-use App\Services\Payments\LiqPay\LiqPayService;
-use App\Services\Payments\PayPal\PayPalService;
-use App\Services\Payments\Stripe\StripeService;
+use App\Services\Payments\Factory\LiqPay\LiqPayService;
+use App\Services\Payments\Factory\PayPal\PayPalService;
+use App\Services\Payments\Factory\Stripe\StripeService;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use PhpParser\Node\Expr\Match_;
-use phpseclib3\File\ASN1\Maps\MaskGenAlgorithm;
 
 class PaymentFactory
 {

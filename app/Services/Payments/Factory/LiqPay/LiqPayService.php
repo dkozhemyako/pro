@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Payments\LiqPay;
+namespace App\Services\Payments\Factory\LiqPay;
 
-use App\Services\Payments\DTO\MakePaymentDTO;
-use App\Services\Payments\PaymentsInterface;
+use App\Services\Payments\Factory\DTO\MakePaymentDTO;
+use App\Services\Payments\Factory\PaymentsInterface;
 
 class LiqPayService implements PaymentsInterface
 {

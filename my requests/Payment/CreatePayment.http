@@ -1,0 +1,8 @@
+GET http://pro.loc/api/payment/makePayment/2
+Content-Type: application/json
+Accept: application/json
+Cookie: XDEBUG_SESSION=PHPSTORM
+
+{
+    "paymentSystem": 2
+}

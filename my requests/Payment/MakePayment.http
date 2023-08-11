@@ -1,0 +1,8 @@
+POST http://pro.loc/api/payment/confirm/1
+Content-Type: application/json
+Accept: application/json
+Cookie: XDEBUG_SESSION=PHPSTORM
+
+{
+    "paymentId": "6HU98643FC060692Y"
+}
