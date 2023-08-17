@@ -5,8 +5,8 @@ namespace App\Enums;
 
 enum PaymentsEnum: int
 {
-    case STRIPE = 1;
-    case PAYPAL = 2;
+    case STRIPE = 2;
+    case PAYPAL = 1;
     case LIQPAY = 3;
 
 }
