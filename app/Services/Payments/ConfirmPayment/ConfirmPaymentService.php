@@ -9,7 +9,7 @@ use Illuminate\Pipeline\Pipeline;
 
 class ConfirmPaymentService
 {
-    const HANDLERS = [
+    public const HANDLERS = [
         CheckPaymentResultHandler::class,
         SavePaymentResultHandler::class,
     ];

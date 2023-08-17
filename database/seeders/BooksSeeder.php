@@ -13,7 +13,7 @@ class BooksSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10060000; $i++) {
+        for ($i = 0; $i < 210000; $i++) {
             DB::table('books')
                 ->insertOrIgnore([
                     'name' => fake()->streetName(),

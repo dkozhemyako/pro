@@ -9,6 +9,7 @@ use App\Http\Requests\Book\BookIndexRequest;
 use App\Http\Requests\Book\BookShowRequest;
 use App\Http\Requests\Book\BookStoreRequest;
 use App\Http\Requests\Book\BookUpdateRequest;
+use App\Http\Resources\Book\BookModelResource;
 use App\Http\Resources\Book\BookResource;
 use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookStoreDTO;
@@ -28,7 +29,35 @@ class BookController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @throws \Exception
      */
+
+    public function indexModel(BookIndexRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $dto = new BookIndexDTO(
+            $validated['startDate'],
+            $validated['endDate'],
+            $validated,
+        );
+
+        return $this->getSuccessResponse(
+            BookModelResource::collection($this->bookService->indexModel($dto))
+        );
+    }
+    public function indexIterator(BookIndexRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $dto = new BookIndexDTO(
+            $validated['startDate'],
+            $validated['endDate'],
+            $validated,
+        );
+        $data = $this->bookService->indexIterator($dto);
+        return $this->getSuccessResponse(
+            BookResource::collection($data->getIterator()->getArrayCopy())
+        );
+    }
     public function index(BookIndexRequest $request): JsonResponse
     {
         $validated = $request->validated();

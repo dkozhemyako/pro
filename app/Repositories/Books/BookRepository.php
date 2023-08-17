@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Books;
 
+use App\Models\Book;
 use App\Repositories\Books\Iterators\BookIterator;
+use App\Repositories\Books\Iterators\BooksIterator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -71,10 +73,10 @@ class BookRepository
                 'category_id',
                 'categories.name as category_name',
             ])
-            ->forceIndex('PRIMARY, books_created_at_index')
+            //->forceIndex('PRIMARY, books_created_at_index')
             ->join('categories', 'categories.id', '=', 'books.category_id')
             ->orderBy('books.id')
-            ->limit('10')
+            ->limit('1000')
             ->where('books.id', '>', $data->getLastId())
             ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
             ->get();
@@ -82,6 +84,45 @@ class BookRepository
         return $result->map(function ($item) {
             return new BookIterator($item);
         });
+    }
+
+    public function getByDataIterator(BookIndexDTO $data): BooksIterator
+    {
+        $result = DB::table('books')
+            ->select([
+                'books.id',
+                'books.name',
+                'year',
+                'lang',
+                'pages',
+                'category_id',
+                'categories.name as category_name',
+                'authors.id as author_id',
+                'authors.name as author_name',
+
+            ])
+            //->forceIndex('PRIMARY, books_created_at_index')
+            ->join('categories', 'categories.id', '=', 'books.category_id')
+            ->join('author_book', 'books.id', '=', 'author_book.book_id')
+            ->join('authors', 'author_book.author_id', '=', 'authors.id')
+            ->orderBy('books.id')
+            ->limit('1000')
+            ->where('books.id', '>', $data->getLastId())
+            ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
+            ->get();
+
+        return new BooksIterator($result);
+    }
+
+    public function getByDataModel(BookIndexDTO $data): Collection
+    {
+        return Book::query()
+            ->with('category') // ['category', 'authors']
+            ->orderBy('books.id')
+            ->limit('1000')
+            ->where('books.id', '>', $data->getLastId())
+            ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
+            ->get();
     }
 
     public function getByYear(BookIndexDTO $data): Collection

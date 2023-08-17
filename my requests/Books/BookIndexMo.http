@@ -1,4 +1,4 @@
 ### GET request with parameter
-GET http://pro.loc/api/books?startDate=2022-01-01&endDate=2023-08-20
+GET http://pro.loc/api/booksMo?startDate=2022-01-01&endDate=2023-08-20
 Content-Type: application/json
 Accept: application/json
