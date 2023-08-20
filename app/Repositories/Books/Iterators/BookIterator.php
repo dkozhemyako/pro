@@ -25,7 +25,7 @@ class BookIterator
         $this->lang = $data->lang;
         $this->pages = $data->pages;
         $this->category = new CategoryIterator($data);
-        $this->authors = new AuthorsIterator($data);
+        $this->authors = new AuthorsIterator($data->authors);
     }
 
     /**
