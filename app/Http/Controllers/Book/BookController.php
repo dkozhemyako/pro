@@ -15,6 +15,7 @@ use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookStoreDTO;
 use App\Repositories\Books\BookUpdateDTO;
 use App\Services\Books\BookService;
+use App\Services\Books\BookServiceIteratorCache;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -24,6 +25,7 @@ class BookController extends Controller
 {
     public function __construct(
         protected BookService $bookService,
+        protected BookServiceIteratorCache $bookServiceIteratorCache,
     ) {
     }
 
@@ -58,6 +60,23 @@ class BookController extends Controller
             $validated,
         );
         $data = $this->bookService->indexIterator($dto);
+        return $this->getSuccessResponse(
+            BookResource::collection($data->getIterator()->getArrayCopy())
+        );
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function indexIteratorCache(BookIndexRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $dto = new BookIndexDTO(
+            $validated['startDate'],
+            $validated['endDate'],
+            $validated,
+        );
+        $data = $this->bookServiceIteratorCache->indexIteratorNoCache($dto);
         return $this->getSuccessResponse(
             BookResource::collection($data->getIterator()->getArrayCopy())
         );

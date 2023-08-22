@@ -29,3 +29,4 @@ Route::apiResource('categories', CategoryController::class);
 
 Route::get('booksIt', [BookController::class, 'indexIterator']);
 Route::get('booksMo', [BookController::class, 'indexModel']);
+Route::get('booksItCache', [BookController::class, 'indexIteratorCache']);

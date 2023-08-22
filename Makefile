@@ -42,3 +42,5 @@ reload:
 sh:
 	@docker compose exec pro_php_api /bin/bash
 
+sh-redis:
+	@docker compose exec pro_redis /bin/bash
