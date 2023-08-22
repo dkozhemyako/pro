@@ -56,6 +56,9 @@ class BookService
         return $this->bookRepository->getByData($data);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function indexIterator(BookIndexDTO $data): BooksIterator
     {
         return $this->bookRepository->getByDataIterator($data);

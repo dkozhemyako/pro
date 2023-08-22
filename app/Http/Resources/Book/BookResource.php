@@ -15,6 +15,7 @@ class BookResource extends JsonResource
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
+     * @throws \Exception
      */
     public function toArray(Request $request): array
     {
@@ -27,7 +28,7 @@ class BookResource extends JsonResource
             'lang' => $resource->getLang(),
             'pages' => $resource->getPages(),
             'category' => new CategoryResource($resource->getCategory()),
-            'authors' => AuthorResource::collection($resource->getAuthors()),
+            'authors' => AuthorResource::collection($resource->getAuthors()->getIterator()->getArrayCopy()),
 
         ];
     }

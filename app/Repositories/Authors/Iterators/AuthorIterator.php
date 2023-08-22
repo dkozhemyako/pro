@@ -16,10 +16,7 @@ class AuthorIterator
      */
     public function getId(): int
     {
-        if (property_exists($this->data, 'author_id') === true) {
-            return $this->data->author_id;
-        }
-        return '';
+        return $this->data->id;
     }
 
     /**
@@ -27,10 +24,7 @@ class AuthorIterator
      */
     public function getName(): string
     {
-        if (property_exists($this->data, 'author_name') === true) {
-            return $this->data->author_name;
-        }
-        return '';
+        return $this->data->name;
     }
 
     /**

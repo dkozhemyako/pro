@@ -10,8 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('name', 100);
+            $table->year('year');
+            $table->unsignedSmallInteger('pages');
             $table->smallInteger('category');
+            $table->enum('lang', ['en', 'ua', 'pl', 'de']);
         });
     }
 
@@ -20,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('books');
     }
 };

@@ -86,6 +86,9 @@ class BookRepository
         });
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getByDataIterator(BookIndexDTO $data): BooksIterator
     {
         $result = DB::table('books')

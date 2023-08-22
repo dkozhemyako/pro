@@ -45,6 +45,10 @@ class BookController extends Controller
             BookModelResource::collection($this->bookService->indexModel($dto))
         );
     }
+
+    /**
+     * @throws \Exception
+     */
     public function indexIterator(BookIndexRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -58,6 +62,7 @@ class BookController extends Controller
             BookResource::collection($data->getIterator()->getArrayCopy())
         );
     }
+
     public function index(BookIndexRequest $request): JsonResponse
     {
         $validated = $request->validated();
