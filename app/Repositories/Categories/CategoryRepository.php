@@ -5,6 +5,8 @@ namespace App\Repositories\Categories;
 use App\Repositories\Categories\Iterators\CategoryIterator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
+
 
 class CategoryRepository
 {

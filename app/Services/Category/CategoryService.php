@@ -2,10 +2,13 @@
 
 namespace App\Services\Category;
 
+use App\Console\Commands\PublishDTO;
 use App\Repositories\Categories\CategoryRepository;
 use App\Repositories\Categories\CategoryStoreDTO;
 use App\Repositories\Categories\CategoryUpdateDTO;
 use App\Repositories\Categories\Iterators\CategoryIterator;
+use Illuminate\Support\Facades\Redis;
+
 
 class CategoryService
 {
@@ -18,7 +21,16 @@ class CategoryService
     public function store(CategoryStoreDTO $data): CategoryIterator
     {
         $categoryId = $this->categoryRepository->store($data);
-        return $this->categoryRepository->getById($categoryId);
+
+        $category = $this->categoryRepository->getById($categoryId);
+        $publishDTO = new PublishDTO(['id' => $category->getId(), 'name' => $category->getName()]);
+        Redis::publish(
+            'test-channel',
+            json_encode(
+                $publishDTO
+            )
+        );
+        return $category;
     }
 
     public function show(int $categoryId): CategoryIterator

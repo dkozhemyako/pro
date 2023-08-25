@@ -13,6 +13,7 @@ use App\Repositories\Categories\CategoryUpdateDTO;
 use App\Services\Category\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 
 class CategoryController extends Controller
 {
