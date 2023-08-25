@@ -11,7 +11,7 @@ class PaymentResultRepository
     {
         DB::table('order_payment_result')
             ->insert([
-                'user_id' => 1,
+                'user_id' => auth()->user()->id,
                 'payment_system' => $DTO->getPaymentsEnum(),
                 'payment_id' => $DTO->getPaymentId(),
                 'order_id' => $DTO->getOrderId(),

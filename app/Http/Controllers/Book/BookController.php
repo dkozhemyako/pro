@@ -9,11 +9,13 @@ use App\Http\Requests\Book\BookIndexRequest;
 use App\Http\Requests\Book\BookShowRequest;
 use App\Http\Requests\Book\BookStoreRequest;
 use App\Http\Requests\Book\BookUpdateRequest;
+use App\Http\Resources\Book\BookModelResource;
 use App\Http\Resources\Book\BookResource;
 use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookStoreDTO;
 use App\Repositories\Books\BookUpdateDTO;
 use App\Services\Books\BookService;
+use App\Services\Books\BookServiceIteratorCache;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -23,12 +25,63 @@ class BookController extends Controller
 {
     public function __construct(
         protected BookService $bookService,
+        protected BookServiceIteratorCache $bookServiceIteratorCache,
     ) {
     }
 
     /**
      * Display a listing of the resource.
+     * @throws \Exception
      */
+
+    public function indexModel(BookIndexRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $dto = new BookIndexDTO(
+            $validated['startDate'],
+            $validated['endDate'],
+            $validated,
+        );
+
+        return $this->getSuccessResponse(
+            BookModelResource::collection($this->bookService->indexModel($dto))
+        );
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function indexIterator(BookIndexRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $dto = new BookIndexDTO(
+            $validated['startDate'],
+            $validated['endDate'],
+            $validated,
+        );
+        $data = $this->bookService->indexIterator($dto);
+        return $this->getSuccessResponse(
+            BookResource::collection($data->getIterator()->getArrayCopy())
+        );
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function indexIteratorCache(BookIndexRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $dto = new BookIndexDTO(
+            $validated['startDate'],
+            $validated['endDate'],
+            $validated,
+        );
+        $data = $this->bookServiceIteratorCache->indexIteratorNoCache($dto);
+        return $this->getSuccessResponse(
+            BookResource::collection($data->getIterator()->getArrayCopy())
+        );
+    }
+
     public function index(BookIndexRequest $request): JsonResponse
     {
         $validated = $request->validated();

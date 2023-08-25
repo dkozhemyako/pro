@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Books\Iterators;
 
+use App\Repositories\Authors\Iterators\AuthorsIterator;
 use App\Repositories\Categories\Iterators\CategoryIterator;
+
 
 class BookIterator
 {
@@ -12,6 +14,7 @@ class BookIterator
     protected string $lang;
     protected int $pages;
     protected CategoryIterator $category;
+    protected AuthorsIterator $authors;
 
 
     public function __construct(object $data)
@@ -22,6 +25,15 @@ class BookIterator
         $this->lang = $data->lang;
         $this->pages = $data->pages;
         $this->category = new CategoryIterator($data);
+        $this->authors = new AuthorsIterator($data->authors);
+    }
+
+    /**
+     * @return AuthorsIterator
+     */
+    public function getAuthors(): AuthorsIterator
+    {
+        return $this->authors;
     }
 
     /**

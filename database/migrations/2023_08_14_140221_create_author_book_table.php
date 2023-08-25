@@ -10,9 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->enum('lang', ['en', 'ua', 'pl', 'de'])->change();
-            $table->unsignedSmallInteger('pages')->change();
+        Schema::create('author_book', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('author_id');
+            $table->unsignedInteger('book_id');
         });
     }
 
@@ -21,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('author_book');
     }
 };

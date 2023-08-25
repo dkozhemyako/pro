@@ -7,6 +7,7 @@ use App\Repositories\Books\BookRepository;
 use App\Repositories\Books\BookStoreDTO;
 use App\Repositories\Books\BookUpdateDTO;
 use App\Repositories\Books\Iterators\BookIterator;
+use App\Repositories\Books\Iterators\BooksIterator;
 use Illuminate\Support\Collection;
 
 class BookService
@@ -39,6 +40,7 @@ class BookService
         return $this->bookRepository->deleteById($bookId);
     }
 
+
     public function index(BookIndexDTO $data): Collection
     {
         if ($data->getYear() !== null && $data->getLang() === null) {
@@ -52,6 +54,19 @@ class BookService
         }
 
         return $this->bookRepository->getByData($data);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function indexIterator(BookIndexDTO $data): BooksIterator
+    {
+        return $this->bookRepository->getByDataIterator($data);
+    }
+
+    public function indexModel(BookIndexDTO $data): Collection
+    {
+        return $this->bookRepository->getByDataModel($data);
     }
 
 }

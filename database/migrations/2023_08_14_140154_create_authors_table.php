@@ -10,8 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->smallInteger('category');
+        Schema::create('authors', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -20,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('authors');
     }
 };

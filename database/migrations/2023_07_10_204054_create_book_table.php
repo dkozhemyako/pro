@@ -15,8 +15,9 @@ return new class extends Migration {
             $table->timestamps();
             $table->string('name', 100);
             $table->year('year');
-            $table->char('lang', 2);
-            $table->smallInteger('pages');
+            $table->unsignedSmallInteger('pages');
+            $table->smallInteger('category');
+            $table->enum('lang', ['en', 'ua', 'pl', 'de']);
         });
     }
 
