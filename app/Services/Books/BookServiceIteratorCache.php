@@ -6,6 +6,7 @@ use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookRepository;
 use App\Repositories\Books\Iterators\BooksIterator;
 use App\Services\Cache\CacheService;
+use Illuminate\Support\Facades\Redis;
 
 
 class BookServiceIteratorCache

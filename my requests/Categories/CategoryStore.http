@@ -1,8 +1,9 @@
 ### Send POST request with json body
-POST http://pro.loc/api/categories
+POST http://pro.loc:86/api/categories
 Content-Type: application/json
 Accept: application/json
+Cookie: XDEBUG_SESSION=PHPSTORM
 
 {
-    "name": "Second"
+    "name": "TestCat103"
 }

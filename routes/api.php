@@ -5,6 +5,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,16 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth.api'])->group(
+Route::middleware(['auth'])->group(
     function () {
+        Route::middleware(['user.route'])->group(
+            function () {
+                Route::apiResource('books', BookController::class);
+                Route::apiResource('categories', CategoryController::class);
+                Route::get('booksIt', [BookController::class, 'indexIterator']);
+                Route::get('booksMo', [BookController::class, 'indexModel']);
+                Route::get('booksItCache', [BookController::class, 'indexIteratorCache']);
+            }
+        );
     }
 );
+
+
 Route::post('login', [UserController::class, 'login']);
 Route::get('payment/makePayment/{system}', [PaymentController::class, 'createPayment']);
 Route::post('payment/confirm/{system}', [PaymentController::class, 'confirmPayment']);
-Route::apiResource('books', BookController::class);
-Route::apiResource('categories', CategoryController::class);
-
-Route::get('booksIt', [BookController::class, 'indexIterator']);
-Route::get('booksMo', [BookController::class, 'indexModel']);
-Route::get('booksItCache', [BookController::class, 'indexIteratorCache']);
