@@ -14,6 +14,7 @@ class BookServiceIteratorCache
     public function __construct(
         protected BookRepository $bookRepository,
         protected CacheService $cacheService,
+        protected BookIteratorStorage $bookIteratorStorage,
     ) {
     }
 
@@ -22,11 +23,10 @@ class BookServiceIteratorCache
      */
     public function indexIteratorNoCache(BookIndexDTO $data): BooksIterator
     {
-        $tryCache = $this->cacheService->handle($data);
-        if ($tryCache === null) {
+        if ($this->bookIteratorStorage->has($data->getStartDate(), $data->getEndDate()) === false) {
             return $this->bookRepository->getByDataIterator($data);
         }
-        return $tryCache;
+        return $this->cacheService->handle($data);
     }
 //
     /*

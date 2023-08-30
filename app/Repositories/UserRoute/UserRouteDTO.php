@@ -15,14 +15,6 @@ class UserRouteDTO
     }
 
     /**
-     * @param MethodEnum $methodEnum
-     */
-    public function setMethodEnum(MethodEnum $methodEnum): void
-    {
-        $this->methodEnum = $methodEnum;
-    }
-
-    /**
      * @return int
      */
     public function getUserId(): int

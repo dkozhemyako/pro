@@ -4,13 +4,14 @@ namespace App\Services\Proxy;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Redis;
-use JsonSerializable;
+
 
 class WebShareService
 {
     public function __construct
     (
         protected Client $client,
+        protected ProxyStorage $proxyStorage,
     ) {
     }
 
@@ -39,10 +40,10 @@ class WebShareService
             $proxy = [
                 'username' => $obj->username,
                 'password' => $obj->password,
-                'proxy_address' => $obj->proxy_address,
+                'proxyAddress' => $obj->proxy_address,
                 'port' => $obj->port,
             ];
-            Redis::rpush('proxy_list', json_encode($proxy));
+            $this->proxyStorage->rpush(new ProxyDTO(...$proxy));
         }
     }
 
@@ -66,7 +67,7 @@ class WebShareService
             $proxy = [
                 'username' => $obj->username,
                 'password' => $obj->password,
-                'proxy_address' => $obj->proxy_address,
+                'proxyAddress' => $obj->proxy_address,
                 'port' => $obj->port,
             ];
             Redis::rpush('proxy_list', json_encode($proxy));

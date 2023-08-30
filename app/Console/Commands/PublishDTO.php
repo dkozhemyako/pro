@@ -10,23 +10,34 @@ class PublishDTO implements JsonSerializable
 
     public function __construct
     (
-        protected array|string $array
+        protected int $id,
+        protected string $name,
     ) {
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
-        return $this->array;
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
-        return $this->array['id'];
+        return $this->id;
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
-        return $this->array['name'];
+        return $this->name;
     }
+
 
 }

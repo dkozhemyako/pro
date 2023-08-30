@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\CategoryCreated;
-use App\Listeners\CategoryCreatedListener;
+use App\Events\SomeEvent;
+use App\Listeners\SomeEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,8 +28,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(
-            CategoryCreated::class,
-            [CategoryCreatedListener::class, 'handle']
+            SomeEvent::class,
+            [SomeEventListener::class, 'handle']
         );
     }
 

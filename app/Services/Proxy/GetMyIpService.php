@@ -5,37 +5,42 @@ namespace App\Services\Proxy;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
-use JsonSerializable;
+
 
 class GetMyIpService
 {
+    private const MIN_EXECUTION_TIME = 1;
+    private const MAX_COUNT_PROXY_IN_LIST = 5;
+
     public function __construct
     (
         protected Client $client,
         protected WebShareService $webShareService,
+        protected ProxyStorage $proxyStorage,
+        protected CheckTimeService $checkTimeService,
     ) {
     }
 
     public function handle(): string
     {
-        $proxyCount = count(Redis::lrange('proxy_list', 0, 10));
-        if ($proxyCount < 5) {
-            Redis::delete('proxy_list');
+        if ($this->proxyStorage->llen() < self::MAX_COUNT_PROXY_IN_LIST) {
+            $this->proxyStorage->delete();
             $this->webShareService->refreshProxy();
         }
 
-        $proxy = json_decode(Redis::lpop('proxy_list'), true);
-        $userData = $proxy['username'] . ':' . $proxy['password'];
-        $startTime = microtime(true);
+        $proxy = $this->proxyStorage->lpop();
+        $this->checkTimeService->setStartTime();
         $result = $this->client->get(
             'https://api.myip.com',
             [
-                'proxy' => 'http://' . $userData . '@' . $proxy['proxy_address'] . ':' . $proxy['port'],
+                'proxy' => $proxy->getProxyUrl(),
             ]
         );
-        $time = microtime(true) - $startTime;
-        if ($time < 1) {
-            Redis::rpush('proxy_list', json_encode($proxy));
+
+        $this->checkTimeService->setEndTime();
+
+        if ($this->checkTimeService->getDifTime() < self::MIN_EXECUTION_TIME) {
+            $this->proxyStorage->rpush($proxy);
         }
 
         return $result->getBody()->getContents();

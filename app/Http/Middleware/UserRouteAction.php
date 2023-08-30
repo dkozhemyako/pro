@@ -3,11 +3,12 @@
 namespace App\Http\Middleware;
 
 use App\Enums\MethodEnum;
-use App\Events\CategoryCreated;
+use App\Events\SomeEvent;
 use App\Repositories\UserRoute\UserRouteDTO;
 use App\Services\UserRoute\UserRouteService;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Enum;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,14 +29,22 @@ class UserRouteAction
     {
         $dto = new UserRouteDTO
         (
-            auth()->user()->id,
+            1,
             MethodEnum::from($request->getMethod()),
             $request->getRequestUri(),
         );
-        if (is_int($this->userRouteService->handle($dto)) > 0) {
-            CategoryCreated::dispatch($dto->getUserId(), $dto->getRoute());
+        if ($this->successInsertInDB($dto) === true) {
+            SomeEvent::dispatch($dto->getUserId(), $dto->getRoute());
         };
 
         return $next($request);
+    }
+
+    private function successInsertInDB($dto): bool
+    {
+        if ($this->userRouteService->handle($dto) < 1) {
+            return false;
+        }
+        return true;
     }
 }
