@@ -23,13 +23,8 @@ class CategoryService
         $categoryId = $this->categoryRepository->store($data);
 
         $category = $this->categoryRepository->getById($categoryId);
-        $publishDTO = new PublishDTO(['id' => $category->getId(), 'name' => $category->getName()]);
-        Redis::publish(
-            'test-channel',
-            json_encode(
-                $publishDTO
-            )
-        );
+        $publishDTO = new PublishDTO($category->getId(), $category->getName());
+        Redis::publish('test-channel', json_encode($publishDTO));
         return $category;
     }
 

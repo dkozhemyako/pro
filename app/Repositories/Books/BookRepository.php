@@ -5,6 +5,7 @@ namespace App\Repositories\Books;
 use App\Models\Book;
 use App\Repositories\Books\Iterators\BookIterator;
 use App\Repositories\Books\Iterators\BooksIterator;
+use App\Services\Books\BookIteratorStorage;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Log;
 
 class BookRepository
 {
+    public function __construct
+    (
+        protected BookIteratorStorage $bookIteratorStorage,
+    ) {
+    }
+
     public function store(BookStoreDTO $data): int
     {
         return DB::table('books')
@@ -93,10 +100,8 @@ class BookRepository
      */
     public function getByDataIterator(BookIndexDTO $data): BooksIterator
     {
-        $seconds = 30;
-        $result = Cache::remember
-        (
-            $data->getStartDate() . "_" . $data->getEndDate(), $seconds,
+        $result = $this->bookIteratorStorage->remember(
+            $data->getStartDate(), $data->getEndDate(),
             function () use ($data) {
                 return
                     DB::table('books')

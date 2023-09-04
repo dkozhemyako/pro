@@ -28,9 +28,9 @@ class Subscribe extends Command
     public function handle(): void
     {
         Redis::subscribe(['test-channel'], function (string $message) {
-            $data = new PublishDTO(json_decode($message, true));
-            $this->info('categoryId: ' . $data->getId());
-            $this->info('categoryName: ' . $data->getName());
+            $data = json_decode($message, true);
+            $dto = new PublishDTO((int)$data['id'], $data['name']);
+            $this->info('ID: ' . $dto->getId() . ', Name: ' . $dto->getName());
         });
     }
 }
