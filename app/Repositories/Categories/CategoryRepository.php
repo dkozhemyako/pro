@@ -27,6 +27,14 @@ class CategoryRepository
         );
     }
 
+    public function getByName(string $name): bool
+    {
+        return
+            DB::table('categories')
+                ->where('name', '=', $name)
+                ->exists();
+    }
+
     public function updateById(CategoryUpdateDTO $data, int $id): void
     {
         DB::table('categories')

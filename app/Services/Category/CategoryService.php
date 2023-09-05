@@ -3,6 +3,7 @@
 namespace App\Services\Category;
 
 use App\Console\Commands\PublishDTO;
+use App\Exceptions\CategoryStoreExeption;
 use App\Repositories\Categories\CategoryRepository;
 use App\Repositories\Categories\CategoryStoreDTO;
 use App\Repositories\Categories\CategoryUpdateDTO;
@@ -17,9 +18,16 @@ class CategoryService
     ) {
     }
 
-
+    /**
+     * @param CategoryStoreDTO $data
+     * @return CategoryIterator
+     */
     public function store(CategoryStoreDTO $data): CategoryIterator
     {
+        $exist = $this->categoryRepository->getByName($data->getName());
+        if ($exist === true) {
+            throw new CategoryStoreExeption('Категорія з таким імям вєе існує', 333);
+        }
         $categoryId = $this->categoryRepository->store($data);
 
         $category = $this->categoryRepository->getById($categoryId);
