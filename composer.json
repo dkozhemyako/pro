@@ -16,7 +16,12 @@
         "laravel/tinker": "^2.8",
         "predis/predis": "^2.2",
         "srmklive/paypal": "~3.0",
-        "stripe/stripe-php": "^10.20"
+        "stripe/stripe-php": "^10.20",
+        "supervisorphp/configuration": "^0.3.0",
+        "supervisorphp/supervisor": "^5.1",
+        "php-http/message": "^1.16",
+        "php-http/message-factory": "^1.1",
+        "http-interop/http-factory-guzzle": "^1.2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

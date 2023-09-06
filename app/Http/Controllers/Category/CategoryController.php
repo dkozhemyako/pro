@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Exceptions\CategoryStoreExeption;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryDestroyRequest;
 use App\Http\Requests\Category\CategoryShowRequest;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\ErrorResource;
 use App\Repositories\Categories\CategoryStoreDTO;
 use App\Repositories\Categories\CategoryUpdateDTO;
 use App\Services\Category\CategoryService;
@@ -34,8 +36,9 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws CategoryStoreExeption
      */
-    public function store(CategoryStoreRequest $request): JsonResponse
+    public function store(CategoryStoreRequest $request): JsonResponse|ErrorResource
     {
         $validated = $request->validated();
         $dto = new CategoryStoreDTO(
@@ -43,11 +46,19 @@ class CategoryController extends Controller
             now(),
         );
 
-        return $this->getStoreResponse(
-            new CategoryResource(
-                $this->categoryService->store($dto)
-            )
-        );
+        try {
+            $result = $this->categoryService->store($dto);
+            return $this->getStoreResponse(
+                new CategoryResource($result)
+            );
+        } catch (CategoryStoreExeption $categoryStoreExeption) {
+            return new ErrorResource($categoryStoreExeption);
+        }
+        /*
+        finally {
+            var_dump('finally'); // наприклад спосіб сповіщення
+        }
+        */
     }
 
     /**
