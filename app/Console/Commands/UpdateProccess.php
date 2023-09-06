@@ -40,6 +40,7 @@ class UpdateProccess extends Command
         $hasSection = $service->hasSection($process->getName());
         if ($hasSection === false) {
             $this->info('Process with this name does not exist');
+            return;
         }
         $service->updateProcesses($process);
         $this->info('Process successfully updated');

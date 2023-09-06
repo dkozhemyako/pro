@@ -122,7 +122,7 @@ class BookRepository
                         ->join('author_book', 'books.id', '=', 'author_book.book_id')
                         ->join('authors', 'author_book.author_id', '=', 'authors.id')
                         ->orderBy('books.id')
-                        ->limit('5')
+                        ->limit('100')
                         ->where('books.id', '>', $data->getLastId())
                         ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
                         ->get();
@@ -252,5 +252,14 @@ class BookRepository
         return $result->map(function ($item) {
             return new BookIterator($item);
         });
+    }
+
+    public function storeBookAuthor(AuthorBookCreateDTO $bookAuthorDTO): void
+    {
+        DB::table('author_book')
+            ->insert([
+                'author_id' => $bookAuthorDTO->getAuthorId(),
+                'book_id' => $bookAuthorDTO->getBookId(),
+            ]);
     }
 }
