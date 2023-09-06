@@ -5,7 +5,7 @@ namespace App\Services\Proxy;
 class CheckTimeService
 {
     protected float $startTime;
-    public float $endTime = 0;
+    protected float $endTime = 0;
 
     public function getDifTime(): float
     {
