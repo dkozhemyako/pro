@@ -2,11 +2,12 @@
 
 namespace App\Services\Payments\ConfirmPayment;
 
-use App\Enums\PaymentsEnum;
+
+use PaymentsEnum;
 
 class ConfirmPaymentDTO
 {
-    protected MakePaymentResultDTO $makePaymentResultDTO;
+    protected \MakePaymentResultDTO $makePaymentResultDTO;
     protected string $error;
 
     public function __construct
@@ -16,18 +17,15 @@ class ConfirmPaymentDTO
     ) {
     }
 
-    /**
-     * @return MakePaymentResultDTO
-     */
-    public function getMakePaymentResultDTO(): MakePaymentResultDTO
+    public function getMakePaymentResultDTO(): \MakePaymentResultDTO
     {
         return $this->makePaymentResultDTO;
     }
 
     /**
-     * @param MakePaymentResultDTO $makePaymentResultDTO
+     * @param \MakePaymentResultDTO $makePaymentResultDTO
      */
-    public function setMakePaymentResultDTO(MakePaymentResultDTO $makePaymentResultDTO): void
+    public function setMakePaymentResultDTO(\MakePaymentResultDTO $makePaymentResultDTO): void
     {
         $this->makePaymentResultDTO = $makePaymentResultDTO;
     }

@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'user.route'])->group(
     function () {
-        Route::apiResource('books', BookController::class);
+        Route::get('payment/makePayment/{system}', [PaymentController::class, 'createPayment']);
+        Route::post('payment/confirm/{system}', [PaymentController::class, 'confirmPayment']);
         Route::apiResource('categories', CategoryController::class);
+        Route::apiResource('books', BookController::class);
         Route::get('booksIt', [BookController::class, 'indexIterator']);
         Route::get('booksMo', [BookController::class, 'indexModel']);
         Route::get('booksItCache', [BookController::class, 'indexIteratorCache']);
@@ -28,8 +30,6 @@ Route::middleware(['auth', 'user.route'])->group(
 );
 
 Route::post('login', [UserController::class, 'login']);
-Route::get('payment/makePayment/{system}', [PaymentController::class, 'createPayment']);
-Route::post('payment/confirm/{system}', [PaymentController::class, 'confirmPayment']);
 
 /*
 Route::middleware(['user.route'])->group(

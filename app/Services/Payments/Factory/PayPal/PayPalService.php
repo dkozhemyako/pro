@@ -3,21 +3,24 @@
 namespace App\Services\Payments\Factory\PayPal;
 
 use App\Enums\CurrencyEnum;
+use App\Repositories\Payments\PaymentResultRepository;
 use App\Services\Payments\ConfirmPayment\MakePaymentResultDTO;
 use App\Services\Payments\Factory\DTO\MakePaymentDTO;
 use App\Services\Payments\Factory\PaymentsInterface;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Throwable;
 
 class PayPalService implements PaymentsInterface
 {
     public function __construct
     (
         protected PayPalClient $payPalClient,
+        protected PaymentResultRepository $paymentResultRepository,
     ) {
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function makePayment(string $paymentId): MakePaymentResultDTO
     {
@@ -47,7 +50,7 @@ class PayPalService implements PaymentsInterface
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function createPayment(MakePaymentDTO $makePaymentDTO): string
     {
@@ -66,6 +69,8 @@ class PayPalService implements PaymentsInterface
         ]);
 
         if (isset($response['id']) && $response['id'] != null) {
+            $makePaymentDTO->setOrderId($response['id']);
+            $this->paymentResultRepository->storePaymentOrder($makePaymentDTO);
             return $response['id'];
         }
         return '';

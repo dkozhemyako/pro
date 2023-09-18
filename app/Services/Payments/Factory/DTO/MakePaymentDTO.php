@@ -6,6 +6,8 @@ use App\Enums\CurrencyEnum;
 
 class MakePaymentDTO
 {
+    protected string $orderId;
+
     public function __construct
     (
         protected float $amount,
@@ -37,5 +39,22 @@ class MakePaymentDTO
     {
         return $this->description;
     }
+
+    /**
+     * @return string
+     */
+    public function getOrderId(): string
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * @param string $orderId
+     */
+    public function setOrderId(string $orderId): void
+    {
+        $this->orderId = $orderId;
+    }
+
 
 }

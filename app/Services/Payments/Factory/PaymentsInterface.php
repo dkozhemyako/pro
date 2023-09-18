@@ -9,5 +9,5 @@ interface PaymentsInterface
 {
     public function makePayment(string $paymentId): MakePaymentResultDTO;
 
-    public function createPayment(MakePaymentDTO $makePayentDTO): string;
+    public function createPayment(MakePaymentDTO $makePaymentDTO): string;
 }

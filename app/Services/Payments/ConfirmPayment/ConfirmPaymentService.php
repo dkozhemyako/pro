@@ -2,15 +2,17 @@
 
 namespace App\Services\Payments\ConfirmPayment;
 
-use App\Enums\PaymentsEnum;
 use App\Services\Payments\ConfirmPayment\Handlers\CheckPaymentResultHandler;
 use App\Services\Payments\ConfirmPayment\Handlers\SavePaymentResultHandler;
+use App\Services\Payments\ConfirmPayment\Handlers\SecurityPaymentResultHandler;
 use Illuminate\Pipeline\Pipeline;
+use PaymentsEnum;
 
 class ConfirmPaymentService
 {
     public const HANDLERS = [
         CheckPaymentResultHandler::class,
+        SecurityPaymentResultHandler::class,
         SavePaymentResultHandler::class,
     ];
 
