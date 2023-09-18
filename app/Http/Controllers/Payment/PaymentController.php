@@ -4,22 +4,26 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Requests\Payent\PaymentConfirmRequest;
 use App\Services\Payments\ConfirmPayment\ConfirmPaymentService;
-use CurrencyEnum;
+use dkv\test_package\Enum\CurrencyEnum;
+use dkv\test_package\Payments\PaymentFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use MakePaymentDTO;
-use PaymentFactory;
-use PaymentsEnum;
+use dkv\test_package\Payments\DTO\MakePaymentDTO;
+use dkv\test_package\Enum\PaymentsEnum;
 
 class PaymentController extends Controller
 {
     public function __construct
     (
-        protected PaymentFactory $paymentFactory
+        protected PaymentFactory $paymentFactory,
 
     ) {
     }
 
-    public function createPayment(int $system)
+    /**
+     * @throws \Throwable
+     */
+    public function createPayment(int $system): JsonResponse
     {
         $paymentService = $this->paymentFactory->getInstance(
             PaymentsEnum::from($system),
@@ -43,7 +47,7 @@ class PaymentController extends Controller
         PaymentConfirmRequest $request,
         $system,
         ConfirmPaymentService $confirmPaymentService,
-    ) {
+    ): void {
         $data = $request->validated();
         $confirmPaymentService->handle(PaymentsEnum::from($system), $data['paymentId']);
     }

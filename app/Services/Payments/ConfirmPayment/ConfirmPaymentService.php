@@ -6,7 +6,7 @@ use App\Services\Payments\ConfirmPayment\Handlers\CheckPaymentResultHandler;
 use App\Services\Payments\ConfirmPayment\Handlers\SavePaymentResultHandler;
 use App\Services\Payments\ConfirmPayment\Handlers\SecurityPaymentResultHandler;
 use Illuminate\Pipeline\Pipeline;
-use PaymentsEnum;
+use dkv\test_package\Enum\PaymentsEnum;
 
 class ConfirmPaymentService
 {

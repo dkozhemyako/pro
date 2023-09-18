@@ -2,12 +2,12 @@
 
 namespace App\Services\Payments\ConfirmPayment;
 
-
-use PaymentsEnum;
+use dkv\test_package\Payments\DTO\MakePaymentResultDTO;
+use dkv\test_package\Enum\PaymentsEnum;
 
 class ConfirmPaymentDTO
 {
-    protected \MakePaymentResultDTO $makePaymentResultDTO;
+    protected MakePaymentResultDTO $makePaymentResultDTO;
     protected string $error;
 
     public function __construct
@@ -17,15 +17,13 @@ class ConfirmPaymentDTO
     ) {
     }
 
-    public function getMakePaymentResultDTO(): \MakePaymentResultDTO
+    public function getMakePaymentResultDTO(): MakePaymentResultDTO
     {
         return $this->makePaymentResultDTO;
     }
 
-    /**
-     * @param \MakePaymentResultDTO $makePaymentResultDTO
-     */
-    public function setMakePaymentResultDTO(\MakePaymentResultDTO $makePaymentResultDTO): void
+
+    public function setMakePaymentResultDTO(MakePaymentResultDTO $makePaymentResultDTO): void
     {
         $this->makePaymentResultDTO = $makePaymentResultDTO;
     }
@@ -65,7 +63,7 @@ class ConfirmPaymentDTO
     /**
      * @return mixed
      */
-    public function getPaymentId()
+    public function getPaymentId(): mixed
     {
         return $this->paymentId;
     }
