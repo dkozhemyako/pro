@@ -7,19 +7,28 @@ use App\Services\Payments\ConfirmPayment\ConfirmPaymentDTO;
 use App\Services\Payments\ConfirmPayment\ConfirmPaymentInterface;
 use App\Services\Payments\Factory\PaymentFactory;
 use Closure;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
-class SavePaymentResultHandler implements ConfirmPaymentInterface
+class SecurityPaymentResultHandler implements ConfirmPaymentInterface
 {
 
     public function __construct
     (
+        protected PaymentFactory $paymentFactory,
         protected PaymentResultRepository $paymentResultRepository,
     ) {
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function handle(ConfirmPaymentDTO $confirmPaymentDTO, Closure $next): ConfirmPaymentDTO
     {
-        $this->paymentResultRepository->storePaymentResult($confirmPaymentDTO->getMakePaymentResultDTO());
+        $paymentOrder = $this->paymentResultRepository->getAmountByOrder($confirmPaymentDTO);
+        if ($paymentOrder->getAmount() !== $confirmPaymentDTO->getMakePaymentResultDTO()->getAmount()) {
+            return $confirmPaymentDTO;
+        }
+
         return $next($confirmPaymentDTO);
     }
 }
