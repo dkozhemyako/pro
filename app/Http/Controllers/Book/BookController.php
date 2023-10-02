@@ -10,6 +10,7 @@ use App\Http\Requests\Book\BookShowRequest;
 use App\Http\Requests\Book\BookStoreRequest;
 use App\Http\Requests\Book\BookUpdateRequest;
 use App\Http\Resources\Book\BookModelResource;
+use App\Http\Resources\Book\BookOldResource;
 use App\Http\Resources\Book\BookResource;
 use App\Repositories\Books\BookIndexDTO;
 use App\Repositories\Books\BookStoreDTO;
@@ -92,7 +93,7 @@ class BookController extends Controller
         );
 
         return $this->getSuccessResponse(
-            BookResource::collection($this->bookService->index($dto))
+            BookOldResource::collection($this->bookService->index($dto))
         );
     }
 
@@ -112,7 +113,7 @@ class BookController extends Controller
         );
 
         return $this->getStoreResponse(
-            new BookResource(
+            new BookOldResource(
                 $this->bookService->store($dto)
             )
         );
@@ -147,7 +148,7 @@ class BookController extends Controller
         );
         return
             $this->getSuccessResponse(
-                new BookResource(
+                new BookOldResource(
                     $this->bookService->update($dto, $validated['id'])
                 )
             );

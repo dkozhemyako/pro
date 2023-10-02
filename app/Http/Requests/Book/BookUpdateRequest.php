@@ -24,7 +24,7 @@ class BookUpdateRequest extends FormRequest
         return [
             'id' => ['required', 'integer', 'exists:books,id'],
             'name' => ['required', 'string', 'between:1,100', 'unique:books,name'],
-            'year' => ['required', 'integer', 'date_format:Y', 'digits:4', 'min:1970', 'before_or_equal:today'],
+            'year' => ['required', 'integer', 'date_format:Y', 'min:1970', 'before_or_equal:today'],
             'lang' => ['required', 'string', Rule::in(['en', 'ua', 'pl', 'de'])],
             'pages' => ['required', 'integer', 'between:10,55000'],
         ];

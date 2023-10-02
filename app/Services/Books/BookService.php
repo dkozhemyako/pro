@@ -7,6 +7,7 @@ use App\Repositories\Books\BookRepository;
 use App\Repositories\Books\BookStoreDTO;
 use App\Repositories\Books\BookUpdateDTO;
 use App\Repositories\Books\Iterators\BookIterator;
+use App\Repositories\Books\Iterators\BookOldIterator;
 use App\Repositories\Books\Iterators\BooksIterator;
 use Illuminate\Support\Collection;
 
@@ -18,18 +19,18 @@ class BookService
     }
 
 
-    public function store(BookStoreDTO $data): BookIterator
+    public function store(BookStoreDTO $data): BookOldIterator
     {
         $bookId = $this->bookRepository->store($data);
         return $this->bookRepository->getById($bookId);
     }
 
-    public function show(int $bookId): BookIterator
+    public function show(int $bookId): BookOldIterator
     {
         return $this->bookRepository->getById($bookId);
     }
 
-    public function update(BookUpdateDTO $data, int $bookId): BookIterator
+    public function update(BookUpdateDTO $data, int $bookId): BookOldIterator
     {
         $this->bookRepository->updateById($data, $bookId);
         return $this->bookRepository->getById($bookId);

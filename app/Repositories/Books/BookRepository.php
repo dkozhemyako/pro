@@ -4,6 +4,7 @@ namespace App\Repositories\Books;
 
 use App\Models\Book;
 use App\Repositories\Books\Iterators\BookIterator;
+use App\Repositories\Books\Iterators\BookOldIterator;
 use App\Repositories\Books\Iterators\BooksIterator;
 use App\Services\Books\BookIteratorStorage;
 use Illuminate\Support\Collection;
@@ -32,9 +33,9 @@ class BookRepository
             ]);
     }
 
-    public function getById(int $id): BookIterator
+    public function getById(int $id): BookOldIterator
     {
-        return new BookIterator(
+        return new BookOldIterator(
             DB::table('books')
                 ->select([
                     'books.id',
@@ -91,7 +92,7 @@ class BookRepository
             ->get();
 
         return $result->map(function ($item) {
-            return new BookIterator($item);
+            return new BookOldIterator($item);
         });
     }
 
@@ -187,7 +188,7 @@ class BookRepository
                 'category_id',
                 'categories.name as category_name',
             ])
-            ->forceIndex('books_created_at_index, books_year_index')
+            //->forceIndex('books_created_at_index, books_year_index')
             ->join('categories', 'categories.id', '=', 'books.category_id')
             ->orderBy('books.id')
             ->limit('10')
@@ -197,7 +198,7 @@ class BookRepository
             ->get();
 
         return $result->map(function ($item) {
-            return new BookIterator($item);
+            return new BookOldIterator($item);
         });
     }
 
@@ -213,7 +214,7 @@ class BookRepository
                 'category_id',
                 'categories.name as category_name',
             ])
-            ->forceIndex('books_created_at_index, books_lang_index')
+            //->forceIndex('books_created_at_index, books_lang_index')
             ->join('categories', 'categories.id', '=', 'books.category_id')
             ->orderBy('books.id')
             ->limit('10')
@@ -223,7 +224,7 @@ class BookRepository
             ->get();
 
         return $result->map(function ($item) {
-            return new BookIterator($item);
+            return new BookOldIterator($item);
         });
     }
 
@@ -239,7 +240,7 @@ class BookRepository
                 'category_id',
                 'categories.name as category_name',
             ])
-            ->forceIndex('PRIMARY, books_created_at_index, books_year_index, books_lang_index')
+            //->forceIndex('PRIMARY, books_created_at_index, books_year_index, books_lang_index')
             ->join('categories', 'categories.id', '=', 'books.category_id')
             ->orderBy('books.id')
             ->limit('10')
@@ -250,7 +251,7 @@ class BookRepository
             ->get();
 
         return $result->map(function ($item) {
-            return new BookIterator($item);
+            return new BookOldIterator($item);
         });
     }
 
