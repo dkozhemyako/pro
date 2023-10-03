@@ -9,11 +9,11 @@ use Illuminate\Support\Carbon;
 class BookStoreMessageDTO extends BaseMessage
 {
     protected string $name;
-        protected int $year;
-        protected LangEnum $lang;
-        protected int $pages;
-        protected Carbon $createdAt;
-        protected int $categoryId;
+    protected int $year;
+    protected LangEnum $lang;
+    protected int $pages;
+    protected Carbon $createdAt;
+    protected int $categoryId;
 
     /**
      * @return int

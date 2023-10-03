@@ -18,7 +18,7 @@ class BookIndexRequest extends FormRequest
         return [
             'startDate' => ['required', 'date', 'before:endDate'],
             'endDate' => ['required', 'date', 'after:startDate'],
-            'year' => ['sometimes', 'integer', 'date_format:Y', 'digits:4', 'min:1970', 'before_or_equal:today'],
+            'year' => ['sometimes', 'integer', 'date_format:Y', 'min:1970', 'before_or_equal:today'],
             'lang' => ['sometimes', 'string', Rule::in(['en', 'ua', 'pl', 'de'])],
             'lastId' => ['sometimes', 'integer', 'min: 0'],
         ];
