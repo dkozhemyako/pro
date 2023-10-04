@@ -4,18 +4,26 @@ namespace App\Services\Messenger\TelegramMessenger;
 
 use App\Services\Messenger\MessengerInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class TelegramMessengerService implements MessengerInterface
 {
     public function __construct(
         protected Client $client,
     ){}
-    public function send($message): bool
+
+    /**
+     * @throws GuzzleException
+     */
+    public function send($message, int $chatId = null): bool
     {
+        if (is_null($chatId)){
+            $chatId = config('messenger.telegram.chat_id');
+        }
         $this->client->post(config('messenger.telegram.url'),
             [
                 'json' => [
-                    'chat_id' => config('messenger.telegram.chat_id'),
+                    'chat_id' => $chatId,
                     'text' => $message,
                 ],
             ]);
