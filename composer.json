@@ -23,7 +23,8 @@
         "srmklive/paypal": "~3.0",
         "stripe/stripe-php": "^10.20",
         "supervisorphp/configuration": "^0.3.0",
-        "supervisorphp/supervisor": "^5.1"
+        "supervisorphp/supervisor": "^5.1",
+        "telegram-bot/api": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
