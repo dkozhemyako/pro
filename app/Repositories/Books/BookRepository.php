@@ -137,7 +137,7 @@ class BookRepository
     /**
      * @throws \Exception
      */
-    public function getByDataTelegram(int $lastId): BooksIterator
+    public function getByDataTelegram(int $lastId, $limit = 6): BooksIterator
     {
         $result = DB::table('books')
                         ->select([
@@ -157,7 +157,7 @@ class BookRepository
                         ->join('author_book', 'books.id', '=', 'author_book.book_id')
                         ->join('authors', 'author_book.author_id', '=', 'authors.id')
                         ->orderBy('books.id')
-                        ->limit('6')
+                        ->limit($limit)
                         ->where('books.id', '>', $lastId)
                         //->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
                         ->get();
@@ -315,5 +315,19 @@ class BookRepository
                 'updated_at' => Carbon::createFromTimestamp(time()),
             ]);
 
+    }
+
+    public function storeReplaceBook(BookReplaceStoreDTO $bookDTO): void
+    {
+        DB::table('books_with_new_column_and_index')
+            ->insert([
+                'id' => $bookDTO->getId(),
+                'name' => $bookDTO->getName(),
+                'year' => $bookDTO->getYear(),
+                'lang' => $bookDTO->getLang(),
+                'pages' => $bookDTO->getPages(),
+                'created_at' => $bookDTO->getCreatedAt(),
+                'category_id' => $bookDTO->getCategoryId(),
+            ]);
     }
 }
