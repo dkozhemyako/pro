@@ -6,6 +6,7 @@ use App\Console\Commands\GetMyIp;
 use App\Console\Commands\RabbitPublishBook;
 use App\Console\Commands\RabbitPublishWord;
 use App\Console\Commands\RefreshProxy;
+use App\Console\Commands\StoreCountBookViewsAndComments;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,6 +20,8 @@ class Kernel extends ConsoleKernel
         //$schedule->command(RefreshProxy::class)->everyThirtyMinutes();
         //$schedule->command(RabbitPublishBook::class);
         //$schedule->command(RabbitPublishWord::class);
+        $schedule->command(StoreCountBookViewsAndComments::class)->everyOddHour();
+
 
     }
 
