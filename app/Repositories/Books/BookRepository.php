@@ -7,6 +7,7 @@ use App\Repositories\Books\Iterators\BookIterator;
 use App\Repositories\Books\Iterators\BookOldIterator;
 use App\Repositories\Books\Iterators\BooksIterator;
 use App\Services\Books\BookIteratorStorage;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -136,7 +137,7 @@ class BookRepository
     /**
      * @throws \Exception
      */
-    public function getByDataTelegram(int $lastId): BooksIterator
+    public function getByDataTelegram(int $lastId, $limit = 6): BooksIterator
     {
         $result = DB::table('books')
                         ->select([
@@ -156,7 +157,7 @@ class BookRepository
                         ->join('author_book', 'books.id', '=', 'author_book.book_id')
                         ->join('authors', 'author_book.author_id', '=', 'authors.id')
                         ->orderBy('books.id')
-                        ->limit('6')
+                        ->limit($limit)
                         ->where('books.id', '>', $lastId)
                         //->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
                         ->get();
@@ -223,7 +224,7 @@ class BookRepository
             //->forceIndex('books_created_at_index, books_year_index')
             ->join('categories', 'categories.id', '=', 'books.category_id')
             ->orderBy('books.id')
-            ->limit('10')
+            ->limit('5')
             ->where('books.id', '>', $data->getLastId())
             ->where('year', '=', $data->getYear())
             ->whereBetween('books.created_at', [$data->getStartDate(), $data->getEndDate()])
@@ -293,6 +294,40 @@ class BookRepository
             ->insert([
                 'author_id' => $bookAuthorDTO->getAuthorId(),
                 'book_id' => $bookAuthorDTO->getBookId(),
+            ]);
+    }
+
+    public function storeViewsHour(CountBookDTO $dto){
+        DB::table('table_book_number_views_comments_hour')
+            ->insert([
+                'book_id' => $dto->getId(),
+                'book_views' => $dto->getCount(),
+                'book_comments' => 0,
+                'created_at' => Carbon::createFromTimestamp(time()),
+            ]);
+    }
+
+    public function storeComentsHour(CountBookDTO $dto){
+        DB::table('table_book_number_views_comments_hour')
+            ->where('book_id', '=', $dto->getId())
+            ->update([
+                'book_comments' => $dto->getCount(),
+                'updated_at' => Carbon::createFromTimestamp(time()),
+            ]);
+
+    }
+
+    public function storeReplaceBook(BookReplaceStoreDTO $bookDTO): void
+    {
+        DB::table('books_with_new_column_and_index')
+            ->insert([
+                'id' => $bookDTO->getId(),
+                'name' => $bookDTO->getName(),
+                'year' => $bookDTO->getYear(),
+                'lang' => $bookDTO->getLang(),
+                'pages' => $bookDTO->getPages(),
+                'created_at' => $bookDTO->getCreatedAt(),
+                'category_id' => $bookDTO->getCategoryId(),
             ]);
     }
 }
